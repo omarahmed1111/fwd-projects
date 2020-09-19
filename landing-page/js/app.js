@@ -32,7 +32,6 @@ const sections = main.querySelectorAll('section');
  * 
 */
 
-
 function buildNavBar(){
 
     const listFragment = document.createDocumentFragment();
@@ -41,11 +40,33 @@ function buildNavBar(){
         const listItem = document.createElement('li');
         const sectionName = section.getAttribute('data-nav');
         
-        listItem.textContent = sectionName;
+        listItem.innerHTML = `<a href="#${section.id}">${sectionName}</a>`;
         listFragment.appendChild(listItem);
     });
 
     navBarList.appendChild(listFragment);
+}
+
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= -300 && rect.top <=300
+    );
+}
+
+function removeAllHighlightedSections(){
+    sections.forEach((section) => {
+        section.classList.remove('your-active-class');
+    });
+}
+
+function highlightActiveSection(){
+    removeAllHighlightedSections();
+
+    sections.forEach((section) => {
+        if(isInViewport(section))
+            section.classList.add('your-active-class');
+    });
 }
 
 
@@ -55,11 +76,24 @@ function buildNavBar(){
  * 
 */
 
+
 // build the nav
 buildNavBar();
 
 // Add class 'active' to section when near top of viewport
+let scrolling = false;
 
+window.onscroll = () => {
+    scrolling = true;
+};
+
+setInterval(() => {
+    if (scrolling) {
+        scrolling = false;
+        highlightActiveSection();
+    }
+
+},100);
 
 // Scroll to anchor ID using scrollTO event
 
