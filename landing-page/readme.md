@@ -4,8 +4,12 @@ This is a small template for a landing page. The header of the page is built dyn
 ### Developement environment
 * VS code
 * Linux ubuntu 16.04
+* VS code live server extension.
 
 ### Developement technologies
 * HTML5
 * CSS3
 * JS ES5
+
+### User manual
+Just run index.html and the website will open.
