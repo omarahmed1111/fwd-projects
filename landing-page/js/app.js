@@ -17,12 +17,9 @@
  * Define Global Variables
  * 
 */
-const pageHeader = document.querySelector('.page__header');
-const navBar = pageHeader.firstElementChild;
-const navBarList = navBar.firstElementChild;
+const navBarList = document.querySelector('.navbar__list');
 
-const main = document.querySelector('main');
-const sections = main.querySelectorAll('section');
+const sections = document.querySelectorAll('section');
 
 
 
@@ -31,11 +28,12 @@ const sections = main.querySelectorAll('section');
  * Start Helper Functions
  * 
 */
-
+// Helper function to build dynamically the navbar from page sections.
 function buildNavBar(){
 
     const listFragment = document.createDocumentFragment();
 
+    // Loop through sections of the page and add a link in the navbar for navigating to it.
     sections.forEach((section) => {
         const listItem = document.createElement('li');
         const sectionName = section.getAttribute('data-nav');
@@ -47,6 +45,7 @@ function buildNavBar(){
     navBarList.appendChild(listFragment);
 }
 
+// Helper function to check whether the element is present in the current viewport.
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -54,12 +53,14 @@ function isInViewport(element) {
     );
 }
 
+// Helper function to remove all highlighted section on the page.
 function removeAllHighlightedSections(){
     sections.forEach((section) => {
         section.classList.remove('your-active-class');
     });
 }
 
+// Helper function to highlight only active sections.
 function highlightActiveSection(){
     removeAllHighlightedSections();
 
@@ -80,23 +81,6 @@ function highlightActiveSection(){
 // build the nav
 buildNavBar();
 
-// Add class 'active' to section when near top of viewport
-let scrolling = false;
-
-window.onscroll = () => {
-    scrolling = true;
-};
-
-setInterval(() => {
-    if (scrolling) {
-        scrolling = false;
-        highlightActiveSection();
-    }
-
-},100);
-
-// Scroll to anchor ID using scrollTO event
-
 
 /**
  * End Main Functions
@@ -104,10 +88,18 @@ setInterval(() => {
  * 
 */
 
-// Build menu 
+// Add class 'active' to section when near top of viewport
+let scrolling = false;
 
-// Scroll to section on link click
+window.onscroll = () => {
+    scrolling = true;
+};
+// Delay the scrolling event to prevent overflow of memory.
+setInterval(() => {
+    if (scrolling) {
+        scrolling = false;
+        highlightActiveSection();
+    }
 
-// Set sections as active
-
+},100);
 
