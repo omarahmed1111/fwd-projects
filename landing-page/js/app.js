@@ -17,7 +17,7 @@
  * Define Global Variables
  * 
 */
-const navBarList = document.querySelector('.navbar__list');
+const navBarList = document.querySelector('#navbar__list');
 
 const sections = document.querySelectorAll('section');
 
