@@ -18,3 +18,13 @@ app.use(express.static('website'));
 
 
 // Setup Server
+const PORT = 3000;
+
+app.listen(PORT,() => {
+    console.log('Listening to port: ' + PORT);
+});
+
+// GET route
+app.get('/', (req, res) => {
+    res.send(projectData);
+});
