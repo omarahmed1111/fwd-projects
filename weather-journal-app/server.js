@@ -34,6 +34,7 @@ app.post('/', (req, res) => {
     projectData = {
         temprature: req.body.temperature,
         date: req.body.date,
-        "user-response": req.body["user-response"]
+        "user-input": req.body["user-input"]
     }
+    res.send(projectData);
 });

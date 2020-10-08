@@ -11,10 +11,31 @@ const getWeather = async (zipCode) => {
 
     try {
         const weather = await res.json();
-        console.log(weather);
+        //console.log(weather);
         return weather;
     } catch(err) {
         console.log("error: " + err);
+    }
+}
+
+// Helper function to make a post request for saving the data on server.
+const saveData = async (path, data) => {
+
+    const response = await fetch(path, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    try {
+        const newData = await response.json();
+        console.log(newData);
+        return newData;
+    } catch(err) {
+        console.log("Error: " + err);
     }
 }
 
@@ -24,8 +45,12 @@ const getWeather = async (zipCode) => {
 // - update the UI with the current weather.
 const generateWeather = () => {
     const zipCode = document.querySelector('#zip').value;
-    const weather = getWeather(zipCode);
-}
+    const userInput = document.querySelector('#feelings').value;
 
+    getWeather(zipCode)
+    .then(function(data) {
+        saveData('/', {temperature: data.weather[0].description, date: newDate, "user-input": userInput});
+    });
+}
 // Click event listener to the generate button.
 document.querySelector('#generate').addEventListener('click', generateWeather);
