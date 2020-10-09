@@ -25,14 +25,14 @@ app.listen(PORT,() => {
 });
 
 // GET route
-app.get('/', (req, res) => {
+app.get('/data', (req, res) => {
     res.send(projectData);
 });
 
 // POST route
 app.post('/', (req, res) => {
     projectData = {
-        temprature: req.body.temperature,
+        temperature: req.body.temperature,
         date: req.body.date,
         "user-input": req.body["user-input"]
     }

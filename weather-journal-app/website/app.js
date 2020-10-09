@@ -32,11 +32,26 @@ const saveData = async (path, data) => {
 
     try {
         const newData = await response.json();
-        console.log(newData);
+        //console.log(newData);
         return newData;
     } catch(err) {
         console.log("Error: " + err);
     }
+}
+
+const updateUI = async () => {
+    const request = await fetch('/data');
+    try {
+        const data = await request.json();
+        //console.log(data);
+        document.querySelector('#date').innerHTML = data.date;
+        document.querySelector('#temp').innerHTML = data.temperature;
+        document.querySelector('#content').innerHTML = data["user-input"];
+
+    } catch(err) {
+        console.log("Error: " + err);
+    }
+
 }
 
 // Helper function for:
@@ -50,7 +65,8 @@ const generateWeather = () => {
     getWeather(zipCode)
     .then(function(data) {
         saveData('/', {temperature: data.weather[0].description, date: newDate, "user-input": userInput});
-    });
+    }).then(updateUI);
 }
+
 // Click event listener to the generate button.
 document.querySelector('#generate').addEventListener('click', generateWeather);
