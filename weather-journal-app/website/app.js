@@ -1,5 +1,5 @@
 /* Global Variables */
-const API_KEY = "4848374c988d864089f78a7455ac9c05";
+const API_KEY = "";        /* Add the api key */ 
 const BASE_URL = "http://api.openweathermap.org/data/2.5/weather?zip=";
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -7,7 +7,7 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 // Helper function to request the weather from openWeatherMap API using the country zipcode.
 const getWeather = async (zipCode) => {
-    const res = await fetch(BASE_URL + zipCode + "&APPID=" + API_KEY);
+    const res = await fetch(BASE_URL + zipCode + "&APPID=" + API_KEY + "&units=metric");
 
     try {
         const weather = await res.json();
@@ -64,7 +64,7 @@ const generateWeather = () => {
 
     getWeather(zipCode)
     .then(function(data) {
-        saveData('/', {temperature: data.weather[0].description, date: newDate, "user-input": userInput});
+        saveData('/', {temperature: data.main.temp, date: newDate, "user-input": userInput});
     }).then(updateUI);
 }
 
