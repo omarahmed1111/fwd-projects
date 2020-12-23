@@ -64,7 +64,6 @@ def venues():
   ind = 0
   dateTimeObj = datetime.now()
   timestampStr = dateTimeObj.strftime("%Y-%m-%d %H:%M:%S")
-  print(timestampStr)
   for venue in venues:
     if venue.city in indexes:
       cur_ind = indexes[venue.city]
@@ -173,7 +172,7 @@ def create_venue_submission():
   venue['state'] = request.form.get('state', '')
   venue['address'] = request.form.get('address', '')
   venue['phone'] = request.form.get('phone', '')
-  venue['genres'] = request.form.getlist('genres', '')
+  venue['genres'] = ','.join(request.form.getlist('genres'))
   venue['facebook_link'] = request.form.get('facebook_link', '')
   
   error = False
@@ -277,7 +276,6 @@ def show_artist(artist_id):
   
   pshows = db.session.query(Venue, Show).join(Venue).filter(Show.start_time < timestampStr, artist.id == Show.artist_id).all()
   
-  print(pshows)
   for show in pshows:
     data['past_shows'].append({
       'venue_id': show[1].venue_id,
@@ -325,7 +323,7 @@ def edit_artist_submission(artist_id):
   # artist record with ID <artist_id> using the new attributes
   artist = Artist.query.get(artist_id)
   artist.name = request.form.get('name', '')
-  artist.genres = request.form.getlist('genres', '')
+  artist.genres = ','.join(request.form.getlist('genres'))
   artist.city = request.form.get('city', '')
   artist.state = request.form.get('state', '')
   artist.phone = request.form.get('phone', '')
@@ -366,7 +364,7 @@ def edit_venue_submission(venue_id):
   # venue record with ID <venue_id> using the new attributes
   venue = Venue.query.get(venue_id)
   venue.name = request.form.get('name', '')
-  venue.genres = request.form.getlist('genres', '')
+  venue.genres = ','.join(request.form.getlist('genres'))
   venue.address = request.form.get('address', '')
   venue.city = request.form.get('city', '')
   venue.state = request.form.get('state', '')
@@ -397,7 +395,7 @@ def create_artist_submission():
   artist['city'] = request.form.get('city', '')
   artist['state'] = request.form.get('state', '')
   artist['phone'] = request.form.get('phone', '')
-  artist['genres'] = request.form.getlist('genres', '')
+  artist['genres'] = ','.join(request.form.getlist('genres'))
   artist['facebook_link'] = request.form.get('facebook_link', '')
   error = False
   try:
