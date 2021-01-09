@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 database_name = "trivia"
-database_path = 'postgresql://postgres:@localhost:5432/trivia' 
+database_path = "postgresql://postgres:{}/{}".format('@localhost:5432', database_name)
 
 db = SQLAlchemy()
 
@@ -18,6 +18,7 @@ def setup_db(app, database_path=database_path):
     db.app = app
     db.init_app(app)
     db.create_all()
+    return db
 
 '''
 Question
@@ -32,11 +33,12 @@ class Question(db.Model):
   category = Column(String)
   difficulty = Column(Integer)
 
-  def __init__(self, question, answer, category, difficulty):
+  def __init__(self, question, answer, category, difficulty, id):
     self.question = question
     self.answer = answer
     self.category = category
     self.difficulty = difficulty
+    self.id = id
 
   def insert(self):
     db.session.add(self)
