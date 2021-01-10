@@ -63,7 +63,7 @@ def create_app(test_config=None):
     questions = Question.query.all()
     formatted_questions = [question.format() for question in questions]
     categories = Category.query.all()
-    formatted_categories = [category.id for category in categories]
+    formatted_categories = [category.type for category in categories]
 
     return jsonify({
       "success": True,
@@ -112,6 +112,8 @@ def create_app(test_config=None):
     new_question_answer = body.get('answer', None)
     new_question_diff = body.get('difficulty', None)
     new_question_cat = body.get('category', None)
+    new_question_cat = int(new_question_cat) + 1
+    
 
     max_id = db.session.query(func.max(Question.id)).all()
     max_id = max_id[0][0]+1
@@ -160,7 +162,7 @@ def create_app(test_config=None):
   '''
   @app.route('/categories/<int:category_id>/questions')
   def get_category_questions(category_id):
-    category_id = category_id +1
+    
     cur_category = category_id
     questions = Question.query.filter(Question.category == category_id).all()
     formatted_questions = [question.format() for question in questions]
@@ -187,7 +189,8 @@ def create_app(test_config=None):
   def get_quiz_question():
     body = request.get_json()
     previous_questions = body['previous_questions']
-    quiz_category = body['quiz_category']['type']
+    quiz_category = body['quiz_category']['id']
+    quiz_category = int(quiz_category) +1
     questions = Question.query.filter(Question.category == quiz_category).all() 
     formatted_questions = [question.format() for question in questions]
 
