@@ -1,4 +1,4 @@
-# Full stack nanodegree web development projects
+# Full stack web development nanodegree projects
 My solutions to the fwd full stack web development nanodegree.
 
 ## Projects available
